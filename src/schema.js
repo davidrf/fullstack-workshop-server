@@ -32,10 +32,13 @@ Part 2: Fill in some queries and mutations.
 
 module.exports = `
   type Query {
+    movie(id: ID!): Movie
     movies(sort: SORT_TYPE, page: Int): [Movie]!
+    likes: [Movie!]!
   }
 
   type Mutation {
+    toggleLike(id: ID!): Movie
     login(email: String!): String
   }
 
