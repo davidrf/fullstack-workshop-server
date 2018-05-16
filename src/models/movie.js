@@ -7,9 +7,7 @@ const PAGE_SIZE = 20;
 
 module.exports = ({ config, utils, store, loaders }) => ({
   async getMovieById(id) {
-    const url = `/movie/${id}`;
-
-    return loaders.fetch.load(url);
+    return loaders.fetch.load([`/movie/${id}`]);
   },
 
   async getMovies({ sort, page }) {
@@ -17,15 +15,17 @@ module.exports = ({ config, utils, store, loaders }) => ({
     if (sort === 'POPULARITY') sortParam = 'popularity.desc';
     else if (sort === 'RELEASE_DATE') sortParam = 'release_date.desc';
 
-    const paramString = utils.paramsObjectToURLString({
-      ...(page ? { page } : {}),
-      ...(sortParam ? { sort_by: sortParam } : {}),
-    });
+    const config = {
+      params: {
+        ...(page ? { page } : {}),
+        ...(sortParam ? { sort_by: sortParam } : {}),
+      }
+    };
     const url = `/discover/movie`;
 
     return loaders
       .fetch
-      .load(url)
+      .load([url, config])
       .then(json => json.results || []);
   },
 

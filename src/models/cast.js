@@ -1,10 +1,8 @@
 module.exports = ({ config, utils, loaders }) => ({
   async getCastByMovie(id) {
-    const url = `/movie/${id}/credits`;
-
     return loaders
       .fetch
-      .load(url)
+      .load([`/movie/${id}/credits`])
       .then(json => json.cast || []);
   }
 });
