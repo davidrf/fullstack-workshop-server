@@ -1,12 +1,10 @@
-const fetch = require('node-fetch');
-
 module.exports = ({ config, utils, loaders }) => ({
   async getCastByMovie(id) {
-    const paramString = utils.paramsObjectToURLString(config.params);
-    const url = `${config.url}/movie/${id}/credits${paramString}`;
+    const url = `/movie/${id}/credits`;
 
-    return fetch(url)
-      .then(res => res.json())
+    return loaders
+      .fetch
+      .load(url)
       .then(json => json.cast || []);
   }
 });

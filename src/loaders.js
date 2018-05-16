@@ -5,8 +5,8 @@ module.exports = function makeLoaders(fetch) {
     fetch: new DataLoader(
       queries => {
         return Promise.all(
-          queries.map(([url, config]) => {
-            return fetch(url, config).then(res => res.json());
+          queries.map((url) => {
+            return fetch(url).then(res => res.json())
           }),
         );
       },

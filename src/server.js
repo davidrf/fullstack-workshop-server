@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const { ApolloServer } = require('apollo-server');
-const fetch = require('node-fetch');
 const isEmail = require('isemail');
 
 const typeDefs = require('./schema');
@@ -29,7 +28,23 @@ const models = {
   cast: castModel({ config, utils, loaders: makeLoaders() }),
 };
 
-const context = { models, user: 'a@a.com' };
+const context = ({ req }) => {
+  // simple auth check on every request
+
+  const fetch = utils.makeFetch(config);
+  const loaders = makeLoaders(fetch);
+
+  // Initialize data models and pass dependencies
+  const models = {
+    movie: movieModel({ config, utils, store, loaders }),
+    cast: castModel({ config, utils, loaders }),
+  };
+
+  return {
+    models,
+    user: 'a@a.com',
+  };
+};
 
 const server = new ApolloServer({
   context,
