@@ -31,6 +31,15 @@ const models = {
 
 const context = { models, user: 'a@a.com' };
 
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  engine: true,
+});
+
 // Set up Apollo Server
 
 // Start our server with our port config
+server.listen({
+  port: config.port,
+}).then(({ port }) => console.log(`running on port ${port}`));
