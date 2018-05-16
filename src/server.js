@@ -30,6 +30,8 @@ const models = {
 
 const context = ({ req }) => {
   // simple auth check on every request
+  const { authorization = '' } = req.headers || {};
+  const email = new Buffer(authorization, 'base64').toString('ascii');
 
   const fetch = utils.makeFetch(config);
   const loaders = makeLoaders(fetch);
@@ -42,7 +44,7 @@ const context = ({ req }) => {
 
   return {
     models,
-    user: 'a@a.com',
+    user: isEmail.validate(email) ? email : null,
   };
 };
 

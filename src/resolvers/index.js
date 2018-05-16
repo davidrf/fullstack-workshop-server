@@ -7,5 +7,5 @@ module.exports = {
   ...query,
   ...movie,
   ...cast,
-  // ...mutation,
+  ...mutation,
 };
