@@ -66,7 +66,7 @@ module.exports = `
     id: ID!
     name: String!
     photo(size: Int): String!
-    gender: String!
+    gender: String
     character: String!
   }
 `;

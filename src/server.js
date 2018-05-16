@@ -32,6 +32,7 @@ const models = {
 const context = { models, user: 'a@a.com' };
 
 const server = new ApolloServer({
+  context,
   typeDefs,
   resolvers,
   engine: true,
