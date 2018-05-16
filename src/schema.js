@@ -45,10 +45,25 @@ module.exports = `
   }
 
   type Movie {
-    blah: String
+    id: ID!
+    title: String
+    overview: String
+    score: Int
+    voteCount: Int
+    popularity: Float
+    poster(size: Int): String
+    genres: [String!]!
+    releaseDate: String
+    cast: [Cast!]!
+    isLiked: Boolean
+    runTime: Int
   }
 
   type Cast {
-    blah: String
+    id: ID!
+    name: String!
+    photo(size: Int): String!
+    gender: String!
+    character: String!
   }
 `;
