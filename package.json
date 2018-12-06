@@ -2,7 +2,7 @@
   "name": "graphql-server-workshop",
   "version": "1.0.0",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "nodemon src/server.js"
   },
   "dependencies": {
     "apollo-engine": "latest",
@@ -14,5 +14,8 @@
     "node-fetch": "^2.1.2",
     "sequelize": "^4.37.6",
     "sqlite3": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
   }
 }

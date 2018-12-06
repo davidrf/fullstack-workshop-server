@@ -3,16 +3,11 @@ TODO: Refactor getMovies and getMovieById to use DataLoader
 Check out models/cast for an example!
 */
 
-const fetch = require('node-fetch');
-
 const PAGE_SIZE = 20;
 
 module.exports = ({ config, utils, store, loaders }) => ({
   async getMovieById(id) {
-    const paramString = utils.paramsObjectToURLString(config.params);
-    const url = `${config.url}/movie/${id}${paramString}`;
-
-    return fetch(url).then(res => res.json());
+    return loaders.fetch.load([`/movie/${id}`]);
   },
 
   async getMovies({ sort, page }) {
@@ -20,15 +15,17 @@ module.exports = ({ config, utils, store, loaders }) => ({
     if (sort === 'POPULARITY') sortParam = 'popularity.desc';
     else if (sort === 'RELEASE_DATE') sortParam = 'release_date.desc';
 
-    const paramString = utils.paramsObjectToURLString({
-      ...config.params,
-      ...(page ? { page } : {}),
-      ...(sortParam ? { sort_by: sortParam } : {}),
-    });
-    const url = `${config.url}/discover/movie${paramString}`;
+    const config = {
+      params: {
+        ...(page ? { page } : {}),
+        ...(sortParam ? { sort_by: sortParam } : {}),
+      }
+    };
+    const url = `/discover/movie`;
 
-    return fetch(url)
-      .then(res => res.json())
+    return loaders
+      .fetch
+      .load([url, config])
       .then(json => json.results || []);
   },
 

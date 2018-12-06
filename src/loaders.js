@@ -6,7 +6,7 @@ module.exports = function makeLoaders(fetch) {
       queries => {
         return Promise.all(
           queries.map(([url, config]) => {
-            return fetch(url, config).then(res => res.json());
+            return fetch(url, config).then(res => res.json())
           }),
         );
       },
